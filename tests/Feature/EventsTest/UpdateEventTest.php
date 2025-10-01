@@ -1,6 +1,7 @@
 <?php
 
 
+use App\actions\EventActions\CreateEventAction;
 use App\actions\EventActions\CreatEventAction;
 use App\actions\EventActions\UpdateEventAction;
 use App\Filament\Resources\Events\Pages\EditEvent;
@@ -50,7 +51,7 @@ beforeEach(function () {
         "city_id" => $this->city->id,
     ]);
 
-    $action = new CreatEventAction(
+    $action = new CreateEventAction(
         name: 'Test Event',
         description: 'This is a test event',
         location: 'Tripoli',
@@ -66,7 +67,6 @@ beforeEach(function () {
 });
 
 it('update an event with ticket types', closure: function () {
-//    dd($this->event);
     $action = new UpdateEventAction(
         event: $this->event,
         name: 'New Test Event',

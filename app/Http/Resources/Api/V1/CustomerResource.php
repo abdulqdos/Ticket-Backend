@@ -14,7 +14,6 @@ class CustomerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
         return [
                 "id" => $this->id,
                 "type" => "customer",
@@ -25,9 +24,24 @@ class CustomerResource extends JsonResource
                     'last_name'    => $this->last_name,
                     'email'        => $this->email,
                 ],
-            'links' => [
-                'self' => route('api.v1.customers.show' , ['customer' => $this->id])
-            ],
+                'relationships' => [
+                    'tickets' => [
+                        "data" => $this->ticketTypes->map(function($type) {
+                            return [
+                                "id"   => $type->id,
+                                "type" => "tickets",
+                            ];
+                        })
+                    ],
+                ],
+                'includes' => [
+                    'tickets' => [
+                        "data" => TicketTypeResource::collection($this->whenLoaded('ticketTypes')),
+                    ],
+                ],
+                'links' => [
+                    'self' => route('api.v1.customers.show' , ['customer' => $this->id])
+                ]
         ];
     }
 }

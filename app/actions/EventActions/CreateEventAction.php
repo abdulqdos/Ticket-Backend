@@ -1,11 +1,12 @@
 <?php
 
 namespace App\actions\EventActions ;
+
 use App\Models\Company;
 use App\Models\Event ;
 use Illuminate\Support\Facades\DB;
 
-class CreatEventAction
+class CreateEventAction
 {
     protected Event $event;
 
@@ -41,7 +42,7 @@ class CreatEventAction
 
             foreach($this->ticketTypes as $type)
             {
-                (new CreateEventTicketTypes(
+                (new CreateEventTicketTypeAction(
                     name: $type['name'],
                     price: $type['price'],
                     quantity: $type['quantity'],

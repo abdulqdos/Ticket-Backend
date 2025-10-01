@@ -13,23 +13,6 @@ use Illuminate\Database\Eloquent\Model ;
 class EditEvent extends EditRecord
 {
     protected static string $resource = EventResource::class;
-
-    protected function handleRecordUpdate(Model $record, array $data): \App\Models\Event
-    {
-        dd($record , "yeah");
-
-        return ((new UpdateEventAction(
-            event: $record,
-            name: $data['name'],
-            description: $data['description'],
-            location: $data['location'],
-            start_date: $data['start_date'],
-            end_date: $data['end_date'],
-            company: $data['company_id'],
-            city: $data['city_id'],
-            ticketTypes: $data['ticketTypes'],
-        ))->execute());
-    }
     protected function getHeaderActions(): array
     {
         return [
