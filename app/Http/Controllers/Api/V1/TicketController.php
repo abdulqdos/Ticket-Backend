@@ -9,10 +9,57 @@ use App\Models\Event;
 use App\Models\TicketType;
 use App\Traits\Api\ApiResponses;
 
+/**
+ * @OA\Tag(
+ *     name="Tickets",
+ *     description="APIs for managing tickets"
+ * )
+ */
 class TicketController extends Controller
 {
-    use ApiResponses ;
+    use ApiResponses;
 
+    /**
+     * Book a ticket
+     *
+     * @OA\Post(
+     *     path="/api/v1/tickets/{event_id}/{ticketType_id}/store",
+     *     tags={"Tickets"},
+     *     summary="Book a ticket for an event",
+     *     @OA\Parameter(
+     *         name="event_id",
+     *         in="path",
+     *         description="ID of the event",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="ticketType_id",
+     *         in="path",
+     *         description="ID of the ticket type",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Ticket booked successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Your Booked Has Create Check your profile"),
+     *             @OA\Property(property="data", type="object"),
+     *             @OA\Property(property="status", type="integer", example=201)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation or business rule error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="This ticket does not belong to the selected event"),
+     *             @OA\Property(property="status", type="integer", example=422)
+     *         )
+     *     ),
+     *     security={{"sanctum":{}}}
+     * )
+     */
     // Booking Ticket
     public  function store($event_id ,$ticketType_id )
     {
@@ -25,12 +72,12 @@ class TicketController extends Controller
 
 
         // if ticket belongs to event
-         if(!$event->getTicketType($ticketType)) {
-             return $this->error([
-                 'message' => 'This ticket does not belong to the selected event',
-                 'status' => 422
-             ], 422);
-         }
+        if(!$event->getTicketType($ticketType)) {
+            return $this->error([
+                'message' => 'This ticket does not belong to the selected event',
+                'status' => 422
+            ], 422);
+        }
 
         if($customer->alreadyBooked($ticketType)) {
             return $this->error([
@@ -47,7 +94,7 @@ class TicketController extends Controller
             ] , 422);
         }
 
-       // book a ticket with customer (pivot table)
+        // book a ticket with customer (pivot table)
         $ticket = (new CreateTicketAction(
             ticketType_id: $ticketType->id,
             customer_id: $customer->id,
@@ -61,6 +108,46 @@ class TicketController extends Controller
         ], 201 );
     }
 
+    /**
+     * Cancel a booked ticket
+     *
+     * @OA\Delete(
+     *     path="/api/v1/tickets/{event_id}/{ticketType_id}/destroy",
+     *     tags={"Tickets"},
+     *     summary="Cancel a booked ticket",
+     *     @OA\Parameter(
+     *         name="event_id",
+     *         in="path",
+     *         description="ID of the event",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="ticketType_id",
+     *         in="path",
+     *         description="ID of the ticket type",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Ticket canceled successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Your Booked Has Deleted"),
+     *             @OA\Property(property="status", type="integer", example=201)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation or business rule error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="You do not booked this ticket to cancel"),
+     *             @OA\Property(property="status", type="integer", example=422)
+     *         )
+     *     ),
+     *     security={{"sanctum":{}}}
+     * )
+     */
     // Cancel Booking
     public function destroy($event_id ,$ticketType_id)
     {

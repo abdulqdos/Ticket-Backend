@@ -10,7 +10,7 @@ beforeEach(function () {
 });
 
 it('can register', function () {
-    post("/api/auth/register", [
+    post("/api/customer/register", [
         'phone' => '0912345678',
         'backup_phone' => '0937654321',
         'first_name' => 'John',
@@ -22,7 +22,7 @@ it('can register', function () {
 });
 
 it("can create an account", function () {
-    post("/api/auth/register", [
+    post("/api/customer/register", [
         'phone' => '0912345678',
         'backup_phone' => '0937654321',
         'first_name' => 'John',

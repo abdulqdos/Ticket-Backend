@@ -5,6 +5,7 @@
 use App\Http\Resources\Api\V1\TicketTypeResource;
 use App\Models\TicketType;
 use function Pest\Laravel\get;
+use function Pest\Laravel\getJson;
 
 beforeEach(function () {
     $this->ticketTypes = TicketTypeResource::collection(TicketType::all())
@@ -13,7 +14,7 @@ beforeEach(function () {
 });
 
 it('can access the route', function () {
-    get(route('api.v1.ticket-types.index'))
+    getJson(route('api.v1.ticket-types.index'))
         ->assertStatus(200);
 });
 

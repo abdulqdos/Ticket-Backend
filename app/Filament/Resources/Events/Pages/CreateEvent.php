@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Events\Pages;
 
+use App\actions\EventActions\CreateEventAction;
 use App\actions\EventActions\CreatEventAction;
 use App\Filament\Resources\Events\EventResource;
 use Filament\Resources\Pages\CreateRecord;
@@ -14,7 +15,7 @@ class CreateEvent extends CreateRecord
 
     protected function handleRecordCreation(array $data): \App\Models\Event
     {
-        return ((new CreatEventAction(
+        return ((new CreateEventAction(
             name: $data['name'],
             description: $data['description'],
             location: $data['location'],

@@ -37,7 +37,7 @@ Class UpdateEventAction
 
             foreach($this->ticketTypes as $type)
             {
-                (new CreateEventTicketTypes(
+                (new CreateEventTicketTypeAction(
                     name: $type['name'],
                     price: $type['price'],
                     quantity: $type['quantity'],
