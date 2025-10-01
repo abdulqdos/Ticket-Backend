@@ -24,10 +24,14 @@ class CustomerController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="List of customers",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Customer")
-     *         )
+     * @OA\JsonContent(
+     *     type="object",
+     *     @OA\Property(
+     *         property="data",
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/CustomerData")
+     *     )
+     * )
      *     )
      * )
      */
@@ -53,7 +57,14 @@ class CustomerController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Customer details",
-     *         @OA\JsonContent(ref="#/components/schemas/Customer")
+     *         * @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items(ref="#/components/schemas/CustomerData")
+     *                  )
+     *              )
      *     ),
      *     @OA\Response(
      *         response=404,

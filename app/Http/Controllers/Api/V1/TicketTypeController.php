@@ -26,7 +26,7 @@ class TicketTypeController extends Controller
      *         description="List of ticket types",
      *         @OA\JsonContent(
      *             type="array",
-     *             @OA\Items(ref="#/components/schemas/TicketType")
+     *             @OA\Items(ref="#/components/schemas/TicketTypeData")
      *         )
      *     )
      * )
@@ -53,7 +53,7 @@ class TicketTypeController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Ticket type details",
-     *         @OA\JsonContent(ref="#/components/schemas/TicketType")
+     *         @OA\JsonContent(ref="#/components/schemas/TicketTypeData")
      *     ),
      *     @OA\Response(
      *         response=404,

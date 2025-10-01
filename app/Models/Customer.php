@@ -35,9 +35,21 @@ class Customer extends Authenticatable
             return $ticket->ticket_type_id === $ticketType->id;
         });
     }
+
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
 
+    public function ticketTypes()
+    {
+        return $this->hasManyThrough(
+            TicketType::class,  // final model
+            Ticket::class,      // intermediate model (pivot)
+            'customer_id',      // foreign key in tickets table
+            'id',               // foreign key in ticket_types table
+            'id',               // local key in customers table
+            'ticket_type_id'    // local key in tickets table
+        );
+    }
 }

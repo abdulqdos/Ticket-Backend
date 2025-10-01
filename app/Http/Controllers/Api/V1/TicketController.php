@@ -23,7 +23,7 @@ class TicketController extends Controller
      * Book a ticket
      *
      * @OA\Post(
-     *     path="/api/v1/tickets/{event_id}/{ticketType_id}/store",
+     *     path="/api/v1/events/{event_id}/ticket-types/{ticketType_id}",
      *     tags={"Tickets"},
      *     summary="Book a ticket for an event",
      *     @OA\Parameter(
@@ -112,7 +112,7 @@ class TicketController extends Controller
      * Cancel a booked ticket
      *
      * @OA\Delete(
-     *     path="/api/v1/tickets/{event_id}/{ticketType_id}/destroy",
+     *     path="/api/v1/events/{event_id}/ticket-types/{ticketType_id}",
      *     tags={"Tickets"},
      *     summary="Cancel a booked ticket",
      *     @OA\Parameter(

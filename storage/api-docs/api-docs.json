@@ -16,14 +16,14 @@
         }
     ],
     "paths": {
-        "/api/auth/login": {
+        "/api/customer/login": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Login as a customer",
                 "description": "Customer login",
-                "operationId": "dd51a484b7fa0f97c7680fdbde14cf5f",
+                "operationId": "c3387f0259139148113092aabd0c2872",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -85,18 +85,45 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "phone": [
+                                                    "The phone field is required."
+                                                ],
+                                                "password": [
+                                                    "The password must be at least 6 characters."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
-        "/api/auth/logout": {
+        "/api/customer/logout": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Logout a customer",
                 "description": "Customer logout",
-                "operationId": "df9bdc6c7a6d9f20b983526b2ec0f698",
+                "operationId": "0c9626687e55a247cd933eb492a2bcb7",
                 "responses": {
                     "200": {
                         "description": "Logged out successfully",
@@ -113,6 +140,22 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -122,14 +165,14 @@
                 ]
             }
         },
-        "/api/auth/register": {
+        "/api/customer/register": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Register a new customer",
                 "description": "Customer register",
-                "operationId": "c7bb21a0d87049e161b8e4c9b0d909f2",
+                "operationId": "315763cd860e5c595bc0a9bce81db8ea",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -191,6 +234,33 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "email": [
+                                                    "The email field is required."
+                                                ],
+                                                "password": [
+                                                    "The password must be at least 6 characters."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -209,10 +279,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Customer"
-                                    }
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/CustomerData"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -245,7 +320,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Customer"
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/CustomerData"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -285,7 +368,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Event"
+                                        "$ref": "#/components/schemas/EventData"
                                     }
                                 }
                             }
@@ -319,7 +402,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Event"
+                                    "$ref": "#/components/schemas/EventData"
                                 }
                             }
                         }
@@ -343,14 +426,14 @@
                 }
             }
         },
-        "/api/v1/tickets/{event_id}/{ticketType_id}/store": {
+        "/api/v1/events/{event_id}/ticket-types/{ticketType_id}": {
             "post": {
                 "tags": [
                     "Tickets"
                 ],
                 "summary": "Book a ticket for an event",
                 "description": "Book a ticket",
-                "operationId": "08af301f4b661d6ea3aa3c8fa1be07a1",
+                "operationId": "08379048d39f3bc1e44bee56c2fe599b",
                 "parameters": [
                     {
                         "name": "event_id",
@@ -421,16 +504,14 @@
                         "sanctum": []
                     }
                 ]
-            }
-        },
-        "/api/v1/tickets/{event_id}/{ticketType_id}/destroy": {
+            },
             "delete": {
                 "tags": [
                     "Tickets"
                 ],
                 "summary": "Cancel a booked ticket",
                 "description": "Cancel a booked ticket",
-                "operationId": "f978355868a8f59f20005ac64e9cb630",
+                "operationId": "52516bb1844a44bd29c36a0527394c13",
                 "parameters": [
                     {
                         "name": "event_id",
@@ -516,7 +597,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TicketType"
+                                        "$ref": "#/components/schemas/TicketTypeData"
                                     }
                                 }
                             }
@@ -550,7 +631,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TicketType"
+                                    "$ref": "#/components/schemas/TicketTypeData"
                                 }
                             }
                         }
@@ -577,6 +658,115 @@
     },
     "components": {
         "schemas": {
+            "CityData": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "city"
+                    },
+                    "attributes": {
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "طرابلس"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "CompanyData": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "company"
+                    },
+                    "attributes": {
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Libyan Web Co."
+                            },
+                            "phone": {
+                                "type": "string",
+                                "example": "0912345678"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "info@company.com"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerData": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "customer"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/Customer"
+                    },
+                    "relationships": {
+                        "properties": {
+                            "tickets": {
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "ticketType"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "includes": {
+                        "properties": {
+                            "tickets": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/TicketTypeData"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "links": {
+                        "properties": {
+                            "self": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
             "Customer": {
                 "title": "Customer",
                 "description": "Customer model",
@@ -595,6 +785,124 @@
                     },
                     "email": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "EventData": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "event"
+                    },
+                    "attributes": {
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "start_date": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "end_date": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "location": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "relationships": {
+                        "properties": {
+                            "ticket_types": {
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "ticket_types"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "city": {
+                                "properties": {
+                                    "data": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "example": "city"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "company": {
+                                "properties": {
+                                    "data": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "example": "company"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "includes": {
+                        "properties": {
+                            "city": {
+                                "$ref": "#/components/schemas/CityData"
+                            },
+                            "company": {
+                                "$ref": "#/components/schemas/CompanyData"
+                            },
+                            "ticketTypes": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/TicketTypeData"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "links": {
+                        "properties": {
+                            "self": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
@@ -627,6 +935,72 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "TicketData": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "ticket"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/TicketType"
+                    },
+                    "links": {
+                        "properties": {
+                            "self": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TicketTypeData": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "ticketType"
+                    },
+                    "attributes": {
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "VIP"
+                            },
+                            "price": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 100.5
+                            },
+                            "quantity": {
+                                "type": "integer",
+                                "example": 50
+                            },
+                            "event_id": {
+                                "type": "integer",
+                                "example": 1
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "links": {
+                        "properties": {
+                            "self": {
+                                "type": "string",
+                                "example": "http://localhost:8000/api/v1/ticket-types/1"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"

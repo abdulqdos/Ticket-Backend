@@ -26,7 +26,7 @@ class EventController extends Controller
      *         description="List of events",
      *         @OA\JsonContent(
      *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Event")
+     *             @OA\Items(ref="#/components/schemas/EventData")
      *         )
      *     )
      * )
@@ -53,7 +53,7 @@ class EventController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Event details",
-     *         @OA\JsonContent(ref="#/components/schemas/Event")
+     *         @OA\JsonContent(ref="#/components/schemas/EventData")
      *     ),
      *     @OA\Response(
      *         response=404,

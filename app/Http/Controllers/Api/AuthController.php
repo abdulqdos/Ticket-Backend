@@ -27,7 +27,7 @@ class AuthController extends Controller
      * Customer login
      *
      * @OA\Post(
-     *     path="/api/auth/login",
+     *     path="/api/customer/login",
      *     tags={"Authentication"},
      *     summary="Login as a customer",
      *     @OA\RequestBody(
@@ -53,6 +53,21 @@ class AuthController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Invalid credentials")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *             @OA\Property(
+     *                 property="errors",
+     *                 type="object",
+     *                 example={
+     *                     "phone": {"The phone field is required."},
+     *                     "password": {"The password must be at least 6 characters."}
+     *                 }
+     *             )
+     *         )
      *     )
      * )
      */
@@ -60,13 +75,7 @@ class AuthController extends Controller
     {
         $request->validated();
 
-        $customer = Customer::query();
-
-        try {
-            $customer = Customer::where('phone', $request->phone)->first();
-        } catch (ModelNotFoundException $e) {
-            return $this->error('Ticket Not Found' ,404);
-        }
+        $customer = Customer::where('phone', $request->phone)->first();
 
         if (! $customer || ! Hash::check($request->password, $customer->password)) {
             return $this->error('Invalid credentials', 401);
@@ -86,7 +95,7 @@ class AuthController extends Controller
      * Customer logout
      *
      * @OA\Post(
-     *     path="/api/auth/logout",
+     *     path="/api/customer/logout",
      *     tags={"Authentication"},
      *     summary="Logout a customer",
      *     security={{"sanctum":{}}},
@@ -95,6 +104,13 @@ class AuthController extends Controller
      *         description="Logged out successfully",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Logged out successfully")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
      *         )
      *     )
      * )
@@ -110,12 +126,11 @@ class AuthController extends Controller
         return $this->ok('Logged out successfully');
     }
 
-
     /**
      * Customer register
      *
      * @OA\Post(
-     *     path="/api/auth/register",
+     *     path="/api/customer/register",
      *     tags={"Authentication"},
      *     summary="Register a new customer",
      *     @OA\RequestBody(
@@ -138,6 +153,21 @@ class AuthController extends Controller
      *                 @OA\Property(property="token", type="string", example="token_here")
      *             )
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *             @OA\Property(
+     *                 property="errors",
+     *                 type="object",
+     *                 example={
+     *                     "email": {"The email field is required."},
+     *                     "password": {"The password must be at least 6 characters."}
+     *                 }
+     *             )
+     *         )
      *     )
      * )
      */
@@ -155,7 +185,7 @@ class AuthController extends Controller
             password:    $request->password
         ))->execute();
 
-        // Return Respone With Token
+        // Return Response With Token
         return $this->ok(
             'Customer registered successfully',
             [
