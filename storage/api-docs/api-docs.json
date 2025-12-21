@@ -16,14 +16,14 @@
         }
     ],
     "paths": {
-        "/api/customer/login": {
+        "/api/customers/login": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Login as a customer",
                 "description": "Customer login",
-                "operationId": "c3387f0259139148113092aabd0c2872",
+                "operationId": "da4b25e3ea8851519ea1281e2a94a914",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -116,14 +116,14 @@
                 }
             }
         },
-        "/api/customer/logout": {
+        "/api/customers/logout": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Logout a customer",
                 "description": "Customer logout",
-                "operationId": "0c9626687e55a247cd933eb492a2bcb7",
+                "operationId": "ef0b0e5a638c64afb1ee8de828fc9ab0",
                 "responses": {
                     "200": {
                         "description": "Logged out successfully",
@@ -165,14 +165,14 @@
                 ]
             }
         },
-        "/api/customer/register": {
+        "/api/customers/register": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Register a new customer",
                 "description": "Customer register",
-                "operationId": "315763cd860e5c595bc0a9bce81db8ea",
+                "operationId": "0eaa242128eb1553edafb37e09742d83",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -212,6 +212,102 @@
                 "responses": {
                     "200": {
                         "description": "Customer registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Customer registered successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "token_here"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "email": [
+                                                    "The email field is required."
+                                                ],
+                                                "password": [
+                                                    "The password must be at least 6 characters."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/customers/{id}/edit": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Update customer Data",
+                "description": "Customer register",
+                "operationId": "6ad777d5013992f487c5d7852a097332",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0123456789"
+                                    },
+                                    "backup_phone": {
+                                        "type": "string",
+                                        "example": "0987654321"
+                                    },
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Customer Data Update successfully",
                         "content": {
                             "application/json": {
                                 "schema": {

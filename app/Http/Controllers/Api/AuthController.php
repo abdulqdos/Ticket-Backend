@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\actions\CustomerActions\CreateCustomerAction;
+use App\actions\CustomerActions\UpdateCustomerAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
+use App\Http\Requests\Api\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -27,7 +29,7 @@ class AuthController extends Controller
      * Customer login
      *
      * @OA\Post(
-     *     path="/api/customer/login",
+     *     path="/api/customers/login",
      *     tags={"Authentication"},
      *     summary="Login as a customer",
      *     @OA\RequestBody(
@@ -95,7 +97,7 @@ class AuthController extends Controller
      * Customer logout
      *
      * @OA\Post(
-     *     path="/api/customer/logout",
+     *     path="/api/customers/logout",
      *     tags={"Authentication"},
      *     summary="Logout a customer",
      *     security={{"sanctum":{}}},
@@ -130,7 +132,7 @@ class AuthController extends Controller
      * Customer register
      *
      * @OA\Post(
-     *     path="/api/customer/register",
+     *     path="/api/customers/register",
      *     tags={"Authentication"},
      *     summary="Register a new customer",
      *     @OA\RequestBody(
@@ -188,6 +190,74 @@ class AuthController extends Controller
         // Return Response With Token
         return $this->ok(
             'Customer registered successfully',
+            [
+                'token' => $customer->createToken('API token for ' . $customer->phone)->plainTextToken,
+            ]
+        );
+    }
+
+    /**
+     * Customer register
+     *
+     * @OA\Post(
+     *     path="/api/customers/{id}/edit",
+     *     tags={"Authentication"},
+     *     summary="Update customer Data",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="phone", type="string", example="0123456789"),
+     *             @OA\Property(property="backup_phone", type="string", example="0987654321"),
+     *             @OA\Property(property="first_name", type="string", example="John"),
+     *             @OA\Property(property="last_name", type="string", example="Doe"),
+     *             @OA\Property(property="email", type="string", example="john@example.com"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Customer Data Update successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Customer registered successfully"),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="token", type="string", example="token_here")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *             @OA\Property(
+     *                 property="errors",
+     *                 type="object",
+     *                 example={
+     *                     "email": {"The email field is required."},
+     *                     "password": {"The password must be at least 6 characters."}
+     *                 }
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function update(Customer $customer , UpdateCustomerRequest $request)
+    {
+        $request->validated();
+
+
+        // Update Customer
+        $customer = (new UpdateCustomerAction(
+            customer: $customer,
+            phone:       $request->phone ?? $customer['phone'],
+            backupPhone: $request->backup_phone ?? $customer['backup_phone'],
+            firstName:   $request->first_name ?? $customer['first_name'],
+            lastName:    $request->last_name ?? $customer['last_name'],
+            email:       $request->email ?? $customer['email'],
+        ))->execute();
+
+        // Return Response With Token
+        return $this->ok(
+            'Customer Data Update successfully',
             [
                 'token' => $customer->createToken('API token for ' . $customer->phone)->plainTextToken,
             ]
