@@ -48,7 +48,7 @@ class EventResource extends JsonResource
                     ]
                 ],
                 'images' => [
-                    'data' => $this->getMedia('images')->map(fn ($media) => [
+                    'data' => $this->getMedia('event-images')->map(fn ($media) => [
                         'id'   => (string) $media->id,
                         'type' => 'media',
                     ]),
@@ -58,6 +58,7 @@ class EventResource extends JsonResource
                 'city' => new CityResource($this->city),
                 'company' => new CompanyResource($this->company),
                 'ticketTypes' => TicketTypeResource::collection($this->whenLoaded('ticketTypes')),
+                'images' => ImageResource::collection($this->getMedia('event-images')),
             ],
             'links' => [
                 'self' => route('api.v1.events.show' , ['event' => $this->id])
