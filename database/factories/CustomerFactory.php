@@ -18,8 +18,8 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'phone'        => fake()->unique()->phoneNumber(),
-            'backup_phone' => fake()->phoneNumber(),
+            'phone' => '09' . fake()->randomElement([1, 2, 3, 4]) . fake()->numerify('#######'),
+            'backup_phone' => '09' . fake()->randomElement([1, 2, 3, 4]) . fake()->numerify('#######'),
             'first_name'   => fake()->firstName(),
             'last_name'    => fake()->lastName(),
             'email'        => fake()->unique()->email(),

@@ -72,17 +72,16 @@ class EventForm
                    ->columnSpanFull(),
 
                // Ticket Types
-               Repeater::make('ticketTypes')
-                   ->label('Ticket Types')
-                   ->relationship('ticketTypes')
-                   ->schema([
-                       Grid::make(3)
-                       ->schema([
-                           TextInput::make('name')->label('Name')->required(),
-                           TextInput::make('price')->label('Price')->required()->minValue(0),
-                           TextInput::make('quantity')->label('Quantity')->required()->minValue(1),
-                       ])
-                   ])
+                Repeater::make('ticketTypes')
+                    ->label('Ticket Types')
+                    ->schema([
+                        Grid::make(3)
+                            ->schema([
+                                TextInput::make('name')->label('Name')->required(),
+                                TextInput::make('price')->label('Price')->required()->minValue(0),
+                                TextInput::make('quantity')->label('Quantity')->required()->minValue(1),
+                            ])
+                    ])
                    ->minItems(1)
                    ->createItemButtonLabel('Add Ticket Type')
                    ->columnSpanFull(),

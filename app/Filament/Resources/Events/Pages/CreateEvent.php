@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Events\Pages;
 
 use App\actions\EventActions\CreateEventAction;
-use App\actions\EventActions\CreatEventAction;
 use App\Filament\Resources\Events\EventResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -23,7 +22,7 @@ class CreateEvent extends CreateRecord
             end_date: $data['end_date'],
             company: $data['company_id'],
             city: $data['city_id'],
-            ticketTypes: $data['ticketTypes'],
+            ticketTypes: $data['ticketTypes'] ?? [],
         ))->execute());
     }
 

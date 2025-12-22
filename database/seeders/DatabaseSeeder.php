@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Customer;
 use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\TicketType;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         // Create Admin
         $admin = User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Admin',
             'email' => 'admin@admin.com',
         ]);
 
@@ -40,6 +41,11 @@ class DatabaseSeeder extends Seeder
 
         Customer::factory()->create([
             'phone' => "0916050468",
+        ]);
+
+        Ticket::factory()->create([
+           'customer_id' => 11,
+           'ticket_type_id' => 2,
         ]);
     }
 }

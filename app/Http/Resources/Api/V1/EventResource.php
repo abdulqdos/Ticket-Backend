@@ -47,6 +47,12 @@ class EventResource extends JsonResource
                         'id' => $this->company_id
                     ]
                 ],
+                'images' => [
+                    'data' => $this->getMedia('images')->map(fn ($media) => [
+                        'id'   => (string) $media->id,
+                        'type' => 'media',
+                    ]),
+                ],
             ],
             'includes' => [
                 'city' => new CityResource($this->city),

@@ -244,7 +244,6 @@ class AuthController extends Controller
     {
         $request->validated();
 
-
         // Update Customer
         $customer = (new UpdateCustomerAction(
             customer: $customer,
@@ -257,10 +256,7 @@ class AuthController extends Controller
 
         // Return Response With Token
         return $this->ok(
-            'Customer Data Update successfully',
-            [
-                'token' => $customer->createToken('API token for ' . $customer->phone)->plainTextToken,
-            ]
+            'Customer Data Update successfully'
         );
     }
 }
