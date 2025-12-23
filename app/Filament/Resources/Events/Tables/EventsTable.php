@@ -66,17 +66,20 @@ class EventsTable
             ->recordActions([
                 ViewAction::make()->color("warning"),
                 EditAction::make()
-                ->using(fn ($record , array $data): Event => ((new UpdateEventAction(
-                    event: $record,
-                    name: $data['name'],
-                    description: $data['description'],
-                    location: $data['location'],
-                    start_date: $data['start_date'],
-                    end_date: $data['end_date'],
-                    company: $data['company_id'],
-                    city: $data['city_id'],
-                    ticketTypes: $data['ticketTypes'],
-                ))->execute())),
+                    ->hidden(fn ($record): bool => $record->start_date <= now())
+                    ->using(fn ($record, array $data): Event => (
+                    (new UpdateEventAction(
+                        event: $record,
+                        name: $data['name'],
+                        description: $data['description'],
+                        location: $data['location'],
+                        start_date: $data['start_date'],
+                        end_date: $data['end_date'],
+                        company: $data['company_id'],
+                        city: $data['city_id'],
+                        ticketTypes: $data['ticketTypes'],
+                    ))->execute()
+                )),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

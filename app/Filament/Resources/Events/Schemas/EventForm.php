@@ -56,7 +56,6 @@ class EventForm
                        ->label(__('Company'))
                        ->options(Company::all()->pluck('name', 'id'))
                        ->required(),
-
                    Select::make('city_id')
                        ->label(__('City'))
                        ->options(City::all()->pluck('name', 'id'))
@@ -74,13 +73,32 @@ class EventForm
                // Ticket Types
                 Repeater::make('ticketTypes')
                     ->label('Ticket Types')
-                    ->relationship()
+                    ->afterStateHydrated(fn (Repeater $component, ?\Illuminate\Database\Eloquent\Model $record) => $component->state($record?->ticketTypes->toArray() ?? []))
                     ->schema([
                         Grid::make(3)
                             ->schema([
-                                TextInput::make('name')->label('Name')->required(),
-                                TextInput::make('price')->label('Price')->required()->minValue(0),
-                                TextInput::make('quantity')->label('Quantity')->required()->minValue(1),
+                                 TextInput::make('name')
+                                    ->label('Name')
+                                    ->required()
+                                    ->validationMessages([
+                                        'required' => 'The ticket name is required.',
+                                    ]),
+                                TextInput::make('price')
+                                    ->label('Price')
+                                    ->required()
+                                    ->minValue(0)
+                                    ->validationMessages([
+                                        'required' => 'The ticket price is required.',
+                                        'min' => 'The ticket price cannot be less than 0.',
+                                    ]),
+                                TextInput::make('quantity')
+                                    ->label('Quantity')
+                                    ->required()
+                                    ->minValue(1)
+                                    ->validationMessages([
+                                        'required' => 'The ticket quantity is required.',
+                                        'min' => 'The ticket quantity must be at least 1.',
+                                    ]),
                             ])
                     ])
                    ->minItems(1)

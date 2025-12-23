@@ -27,7 +27,6 @@ class EventInfolist
                 Section::make(__('Main Information'))
                     ->columnSpanFull()
                     ->schema([
-
                         SpatieMediaLibraryImageEntry::make('images')
                             ->label(__('Event Images'))
                             ->collection("event-images"),

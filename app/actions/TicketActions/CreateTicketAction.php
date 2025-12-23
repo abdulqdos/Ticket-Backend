@@ -18,7 +18,6 @@ class CreateTicketAction
 
     public function execute(): Ticket
     {
-
         return DB::transaction(function () {
             $this->ticket_type->decrement('quantity');
 
