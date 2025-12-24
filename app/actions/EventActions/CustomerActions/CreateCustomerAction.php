@@ -1,6 +1,6 @@
 <?php
 
-namespace App\actions\CustomerActions ;
+namespace App\actions\EventActions\CustomerActions ;
 
 use App\Models\Customer;
 use Illuminate\Support\Facades\DB;

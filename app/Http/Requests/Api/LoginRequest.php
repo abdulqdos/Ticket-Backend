@@ -37,7 +37,13 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'phone.regex' => __('Phone number must start with 091, 092, 093, or 094 and be 10 digits long.')
+            'phone.required' => __('Phone number is required'),
+            'phone.regex' => __('Phone number must start with 091, 092, 093, or 094 and be 10 digits long.'),
+            'phone.min' => __('Phone number must be 10 digits long.'),
+            'phone.max' => __('Phone number must be 10 digits long.'),
+            'password.required' => __('Password is required.'),
+            'password.min' => __('Password must be 8 digits long.'),
+            'password.max' => __('Password must be 8 digits long.'),
         ];
     }
 }

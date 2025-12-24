@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\actions\CustomerActions\CreateCustomerAction;
-use App\actions\CustomerActions\UpdateCustomerAction;
+use App\actions\EventActions\CustomerActions\CreateCustomerAction;
+use App\actions\EventActions\CustomerActions\UpdateCustomerAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Requests\Api\UpdateCustomerRequest;
 use App\Models\Customer;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 use App\Traits\Api\ApiResponses;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @OA\Tag(

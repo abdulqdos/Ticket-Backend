@@ -83,5 +83,12 @@
     "Notification": "إشعار",
     "Notifications": "الإشعارات",
     "Mark all as read": "تحديد الكل كمقروء",
-    "You have no notifications": "ليس لديك إشعارات"
+    "You have no notifications": "ليس لديك إشعارات",
+    "Phone number must start with 091, 092, 093, or 094 and be 10 digits long.": "يجب أن يبدأ رقم الهاتف بـ 091، 092، 093، أو 094 وأن يتكون من 10 أرقام.",
+    "Phone number must be 10 digits long.": "يجب أن يتكون رقم الهاتف من 10 أرقام.",
+    "Password is required.": "كلمة المرور مطلوبة.",
+    "Phone number is required": "رقم الهاتف مطلوب.",
+    "Password must be 8 digits long.": "يجب أن تتكون كلمة المرور من 8 أرقام على الأقل.",
+    "The given data was invalid.": "البيانات المدخلة غير صالحة.",
+    "Invalid credentials": "بيانات الدخول غير صحيحة"
 }
