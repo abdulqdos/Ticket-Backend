@@ -90,5 +90,17 @@
     "Phone number is required": "رقم الهاتف مطلوب.",
     "Password must be 8 digits long.": "يجب أن تتكون كلمة المرور من 8 أرقام على الأقل.",
     "The given data was invalid.": "البيانات المدخلة غير صالحة.",
-    "Invalid credentials": "بيانات الدخول غير صحيحة"
+    "Invalid credentials": "بيانات الدخول غير صحيحة",
+    "Password Confirmation is required.": "تأكيد كلمة المرور مطلوب.",
+    "Password Confirmation does not match.": "كلمة المرور غير متطابقه.",
+    "Password Confirmation must be 8 digits long.": "يجب أن يكون تأكيد كلمة المرور 8 أرقام.",
+    "First name is required.": "الاسم الأول مطلوب.",
+    "First name must be string.": "الاسم الأول يجب أن يكون نصاً.",
+    "Last name is required.": "اسم العائلة مطلوب.",
+    "Last name must be string.": "اسم العائلة يجب أن يكون نصاً.",
+    "Email is required.": "البريد الإلكتروني مطلوب.",
+    "Email must be a valid email address.": "يجب إدخال بريد إلكتروني صحيح.",
+    "Email must be unique.": "هذا البريد الإلكتروني مستخدم مسبقاً.",
+    "Phone number must be unique.": "رقم الهاتف مستخدم مسبقاً.",
+    "Phone number must be string.": "رقم الهاتف يجب أن يكون نصاً."
 }
