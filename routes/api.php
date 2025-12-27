@@ -13,6 +13,7 @@ Route::prefix('customers')->as('api.customer.')->group(function () {
         Route::post('/register', [AuthController::class, 'register'])->name('register');
 
         Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/profile' , [AuthController::class, 'profile'])->name('profile');
             Route::put('/{customer}/edit', [AuthController::class, 'update'])->name('update');
             Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         });

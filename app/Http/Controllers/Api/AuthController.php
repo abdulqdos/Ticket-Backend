@@ -258,4 +258,20 @@ class AuthController extends Controller
             'Customer Data Update successfully'
         );
     }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        return response()->json([
+            'status' => 200,
+            'message' => 'User profile data',
+            'data' => [
+                'id'    => $user->id,
+                'first_name'  => $user->first_name,
+                'last_name'  => $user->last_name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+            ]
+        ]);
+    }
 }
