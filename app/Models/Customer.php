@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Customer extends Authenticatable
+class Customer extends Authenticatable implements HasMedia
 {
-    use HasFactory , HasApiTokens;
+    use HasFactory , HasApiTokens , InteractsWithMedia;
 
     protected $guarded = [
         'id',
