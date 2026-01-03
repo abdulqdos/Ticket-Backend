@@ -259,10 +259,51 @@ class AuthController extends Controller
         );
     }
 
+    /**
+     * User Profile
+     *
+     * @OA\Get(
+     *     path="/api/profile",
+     *     tags={"Authentication"},
+     *     summary="Get authenticated user profile",
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="User profile data",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=200),
+     *             @OA\Property(property="message", type="string", example="User profile data"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="first_name", type="string", example="John"),
+     *                 @OA\Property(property="last_name", type="string", example="Doe"),
+     *                 @OA\Property(property="phone", type="string", example="0123456789"),
+     *                 @OA\Property(property="email", type="string", example="john@example.com"),
+     *                 @OA\Property(
+     *                     property="profile_image",
+     *                     type="string",
+     *                     example="https://example.com/storage/profile/avatar.png"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated.")
+     *         )
+     *     )
+     * )
+     */
     public function profile()
     {
         $user = auth()->user();
-        
+
         return response()->json([
             'status'  => 200,
             'message' => 'User profile data',
@@ -276,5 +317,4 @@ class AuthController extends Controller
             ],
         ]);
     }
-
 }

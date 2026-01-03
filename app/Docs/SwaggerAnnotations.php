@@ -20,6 +20,12 @@ use OpenApi\Annotations as OA;
  *     url="http://localhost:8000",
  *     description="Laravel API Server"
  * )
+ * @OA\SecurityScheme(
+ *      securityScheme="bearerAuth",
+ *      type="http",
+ *      scheme="bearer",
+ *      bearerFormat="JWT"
+ *  )
  */
 
 class SwaggerAnnotations

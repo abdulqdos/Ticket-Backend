@@ -102,5 +102,6 @@
     "Email must be a valid email address.": "يجب إدخال بريد إلكتروني صحيح.",
     "Email must be unique.": "هذا البريد الإلكتروني مستخدم مسبقاً.",
     "Phone number must be unique.": "رقم الهاتف مستخدم مسبقاً.",
-    "Phone number must be string.": "رقم الهاتف يجب أن يكون نصاً."
+    "Phone number must be string.": "رقم الهاتف يجب أن يكون نصاً.",
+    "switch-to": "تبديل إلى"
 }
