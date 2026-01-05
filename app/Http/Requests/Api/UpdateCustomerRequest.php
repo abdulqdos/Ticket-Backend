@@ -21,6 +21,8 @@ class UpdateCustomerRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->user()->id;
+
         return [
             'phone' => [
                 'required',
@@ -28,7 +30,7 @@ class UpdateCustomerRequest extends FormRequest
                 'min:10',
                 'max:10',
                 'regex:/^(091|092|093|094)\d{7}$/',
-                'unique:customers,phone,' . $this->route('customer')->id
+                'unique:customers,phone,' . $userId
             ],
 
             'backup_phone' => [
@@ -37,11 +39,12 @@ class UpdateCustomerRequest extends FormRequest
                 'min:10' ,
                 'max:10' ,
                 'regex:/^(091|092|093|094)\d{7}$/',
-                'unique:customers,backup_phone,' . $this->route('customer')->id
+                'unique:customers,backup_phone,' . $userId
             ],
             'first_name' => 'required|string|max:255',
             'last_name'  => 'required|string|max:255',
-            'email'      => 'nullable|email|unique:customers,email,' . $this->customer->id,
+            'email'      => 'nullable|email|unique:customers,email,' . $userId,
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ];
     }
 }

@@ -239,9 +239,18 @@ class AuthController extends Controller
      *     )
      * )
      */
-    public function update(Customer $customer , UpdateCustomerRequest $request)
+    public function update(UpdateCustomerRequest $request)
     {
+        $customer = auth()->user();
         $request->validated();
+
+
+        if ($request->hasFile('profile_image')) {
+            $customer
+                ->clearMediaCollection('profile')
+                ->addMediaFromRequest('profile_image')
+                ->toMediaCollection('profile');
+        }
 
         // Update Customer
         $customer = (new UpdateCustomerAction(
