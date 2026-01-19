@@ -256,11 +256,12 @@ class AuthController extends Controller
         $customer = (new UpdateCustomerAction(
             customer: $customer,
             phone:       $request->phone ?? $customer['phone'],
-            backupPhone: $request->backup_phone ?? $customer['backup_phone'],
+            backup_phone: $request->backup_phone ?? $customer['backup_phone'],
             firstName:   $request->first_name ?? $customer['first_name'],
             lastName:    $request->last_name ?? $customer['last_name'],
             email:       $request->email ?? $customer['email'],
         ))->execute();
+
 
         // Return Response With Token
         return $this->ok(
@@ -321,6 +322,7 @@ class AuthController extends Controller
                 'first_name'    => $user->first_name,
                 'last_name'     => $user->last_name,
                 'phone'         => $user->phone,
+                'backup_phone'  => $user->backup_phone,
                 'email'         => $user->email,
                 'profile_image' => $user->getFirstMediaUrl('profile'),
             ],
