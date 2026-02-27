@@ -22,6 +22,7 @@ class EventForm
                ->schema([
                    TextInput::make('name')
                        ->label(__('Name'))
+                       ->required()
                        ->rules([
                            'string',
                            'regex:/^[^<>]*$/',
