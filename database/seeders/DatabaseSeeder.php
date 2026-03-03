@@ -47,5 +47,7 @@ class DatabaseSeeder extends Seeder
            'customer_id' => 11,
            'ticket_type_id' => 2,
         ]);
+
+        Ticket::factory(20)->create();
     }
 }
